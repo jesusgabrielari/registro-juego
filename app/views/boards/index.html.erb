@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Boards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Component</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @boards.each do |board| %>
+      <tr>
+        <td><%= board.name %></td>
+        <td><%= board.component %></td>
+        <td><%= image_tag board.photo_table.variant(resize: "100x100", colorspace: 'gray') %></td>
+        <td>
+          <ul>
+            <% board.pieces_photos.each do |photo| %>
+              <li><%= image_tag(resize: "100x100", colorspace: 'gray') %></li>
+            <% end %>
+          </ul>
+        </td>
+        <td><%= link_to 'Ver', rails_blob_path(board.doc_rule, disposition: "preview") %></td>
+        <td><%= link_to 'Descargar', rails_blob_path(board.pieces_photos, disposition: "attachment") %></td>
+        <td><%= link_to 'Show', board %></td>
+        <td><%= link_to 'Edit', edit_board_path(board) %></td>
+        <td><%= link_to 'Destroy', board, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Board', new_board_path %>
